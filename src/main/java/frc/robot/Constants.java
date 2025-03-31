@@ -21,4 +21,5 @@ public final class Constants {
   }
 
   public static final double kMaximumSpeed = Units.feetToMeters(4.5);
+  public static final double test = 1.0;
 }

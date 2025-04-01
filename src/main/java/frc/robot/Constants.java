@@ -22,4 +22,13 @@ public final class Constants {
 
   public static final double kMaximumSpeed = Units.feetToMeters(4.5);
   public static final double test = 2.0;
+
+  public static class MatchStrikerConstants {
+    public static final boolean kMotorInverted = false;
+    public static final double kCurrentLimit = 5.0; // might be too much / too little
+    public static final int kmotorID = 7; // set later
+
+    public static final double kMaxSpeed = 1.0;
+    public static final double kHoldingVoltage = 0.5;
+  }
 }

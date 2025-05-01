@@ -34,7 +34,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     //commented this just to check if what chat works
-    m_swerveSubsystem.setDefaultCommand(driveFieldOrientedAngularVelocity);
+    m_swerveSubsystem.setDefaultCommand(!RobotBase.isSimulation() ? driveFieldOrientedAngularVelocity : driveFieldOrientedDirectAngleSim);
   }
 
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(m_swerveSubsystem.getSwerveDrive(), 
@@ -45,9 +45,40 @@ public class RobotContainer {
                                                                 .deadband(OperatorConstants.kDeadband)
                                                                 .scaleTranslation(0.6)
                                                                 .allianceRelativeControl(true); 
+  /*                                                             
+  SwerveInputStream driveDirectAngle = SwerveInputStream.of(m_swerveSubsystem.getSwerveDrive(), 
+                                                                () -> 0.0, // No translation
+                                                                () -> 0.0) // No strafing
+                                                                .withControllerRotationAxis(m_driverController::getRightX) // Only Rotation
+                                                                .scaleRotation(0.8)
+                                                                .deadband(OperatorConstants.kDeadband);
+  */
 
+  //Command driveFieldOrientedDirectAngle = m_swerveSubsystem.driveFieldOriented(driveDirectAngle);
 
   Command driveFieldOrientedAngularVelocity = m_swerveSubsystem.driveFieldOriented(driveAngularVelocity);
+
+  // Same as the code above, but is simulation code in order for it to work properly using SimGUI
+  SwerveInputStream driveAngularVelocitySim = SwerveInputStream.of(m_swerveSubsystem.getSwerveDrive(),
+                                                                   () -> -m_driverController.getLeftY(),
+                                                                   () -> -m_driverController.getLeftX())
+                                                               .withControllerRotationAxis(() -> m_driverController.getRawAxis(2))
+                                                               .deadband(OperatorConstants.kDeadband)
+                                                               .scaleTranslation(0.8)
+                                                               .allianceRelativeControl(true);
+  // Derive the heading axis with math!
+  SwerveInputStream driveDirectAngleSim     = driveAngularVelocitySim.copy()
+                                                                     .withControllerHeadingAxis(() -> Math.sin(
+                                                                                                    m_driverController.getRawAxis(
+                                                                                                        2) * Math.PI) * (Math.PI * 2),
+                                                                                                () -> Math.cos(
+                                                                                                    m_driverController.getRawAxis(
+                                                                                                        2) * Math.PI) *
+                                                                                                      (Math.PI * 2))
+                                                                     .headingWhile(true);
+
+  Command driveFieldOrientedDirectAngleSim      = m_swerveSubsystem.driveFieldOriented(driveDirectAngleSim);
+  Command driveFieldOrientedAngularVelocitySim = m_swerveSubsystem.driveFieldOriented(driveAngularVelocitySim);
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary

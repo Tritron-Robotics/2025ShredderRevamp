@@ -20,6 +20,6 @@ public final class Constants {
     public static final Double kDeadband = 0.5;
   }
 
-  public static final double kMaximumSpeed = 6.02;
+  public static final double kMaximumSpeed = 4.47333006919;
 
 }

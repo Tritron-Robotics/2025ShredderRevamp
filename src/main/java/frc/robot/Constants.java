@@ -20,6 +20,6 @@ public final class Constants {
     public static final Double kDeadband = 0.5;
   }
 
-  public static final double kMaximumSpeed = Units.feetToMeters(4.5);
-  public static final double test = 2.0;
+  public static final double kMaximumSpeed = 4.47333006919;
+
 }

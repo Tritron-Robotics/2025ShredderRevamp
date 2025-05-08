@@ -20,6 +20,16 @@ public final class Constants {
     public static final Double kDeadband = 0.5;
   }
 
+  public static class UpperJointConstants {
+    
+    public static final int kCurrentLimit = 30;
+    public static final int kMotorAID = 38;
+    public static final int kMotorBID = 39;
+    public static final boolean kMotorAInverted = true;
+    public static final boolean kMotorBInverted = false;
+
+  }
+
   public static final double kMaximumSpeed = 4.47333006919;
 
   public static class LowerConstants {

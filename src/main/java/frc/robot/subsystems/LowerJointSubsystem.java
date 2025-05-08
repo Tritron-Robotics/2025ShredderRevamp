@@ -1,5 +1,65 @@
 package frc.robot.subsystems;
 
-public class LowerJointSubsystem {
+import com.revrobotics.spark.SparkMax;
+
+import java.util.function.Supplier;
+
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.revrobotics.spark.config.SparkMaxConfig;
+
+import frc.robot.Constants.LowerConstants;
+
+public class LowerJointSubsystem extends SubsystemBase {
+    private static final double LOWER_JOINT_MAX_SPEED = 1.0; // Maximum speed for the lower joint
+
     
+
+    private final SparkMax motor;
+
+    private SparkMaxConfig motorConfig;
+
+    public LowerJointSubsystem() {
+        motorConfig = new SparkMaxConfig();
+        motorConfig
+                .inverted(LowerConstants.kMotorInverted)
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(LowerConstants.kCurrentLimit);
+
+        motor = new SparkMax(LowerConstants.kMotorID, MotorType.kBrushless);
+        motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    }
+
+    public void setVoltage(double voltage) {
+        motor.setVoltage(voltage);
+      }
+
+    public void setMotorSpeed(double speed) {
+        motor.set(speed);
+        System.out.println(speed);
+    }   
+
+    public double getMotorCurrent() {
+        return motor.getOutputCurrent();
+    }
+
+    public Command manualControlCommand(Supplier<Double> voltageSupplier) {
+    return runEnd(
+            () -> setVoltage(voltageSupplier.get()), // Apply voltage when held
+            () -> setVoltage(0.125) // Apply holding voltage when released
+    ).withName("arm.manualControl");
+  }
+
+
+    @Override
+    public void periodic(){
+        //System.out.println(motor.get());
+    }
 }

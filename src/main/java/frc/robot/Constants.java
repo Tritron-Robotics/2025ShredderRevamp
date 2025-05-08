@@ -22,4 +22,11 @@ public final class Constants {
 
   public static final double kMaximumSpeed = 4.47333006919;
 
+  public static class LowerConstants {
+    public static final int kMotorID = 22; // updated by Aryan
+    public static final boolean kMotorInverted = false;
+    public static final int kCurrentLimit = 60;
+    public static final double kCurrentThreshold = 30; // To be set later, this should be the value of the heightened current when the tongue hits something
+  }
+
 }

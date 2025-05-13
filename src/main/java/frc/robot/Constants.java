@@ -15,6 +15,7 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static final double kMaximumSpeed = 4.47333006919;
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final Double kDeadband = 0.5;
@@ -25,18 +26,22 @@ public final class Constants {
     public static final int kCurrentLimit = 30;
     public static final int kMotorAID = 38;
     public static final int kMotorBID = 39;
-    public static final boolean kMotorAInverted = true;
-    public static final boolean kMotorBInverted = false;
+    public static final boolean kMotorAInverted = false;
+    public static final boolean kMotorBInverted = true;
+
+    public static final int kEncoderDIOPort = 9; 
+    public static final double rawAtMaxAngle = 0.0127;
+    public static final double rawAt90 = 0.588;
+    public static final double rawAtMinAngle = 0.143;
 
   }
 
-  public static final double kMaximumSpeed = 4.47333006919;
-
   public static class LowerConstants {
-    public static final int kMotorID = 22; // updated by Aryan
+  
+    public static final int kMotorID = 40; 
     public static final boolean kMotorInverted = false;
-    public static final int kCurrentLimit = 60;
-    public static final double kCurrentThreshold = 30; // To be set later, this should be the value of the heightened current when the tongue hits something
+    public static final int kCurrentLimit = 30;
+    public static final int kEncoderDIOPort = 0;
   }
 
 }

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.UpperJointSubsystem;
+import frc.robot.subsystems.LowerJointSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +28,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final UpperJointSubsystem m_upperJointSubsystem = new UpperJointSubsystem();
+  private final LowerJointSubsystem m_lowerJointSubsystem = new LowerJointSubsystem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -96,8 +98,11 @@ public class RobotContainer {
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Upper-joint arm control using left bumper and trigger
-    m_driverController.povLeft().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> 2.0)); // Move arm up
-    m_driverController.povRight().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm down
+    m_driverController.leftTrigger().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> 1.0)); // Move arm down
+    m_driverController.leftBumper().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm up
+
+    m_driverController.rightTrigger().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> 2.0)); // Move arm down
+    m_driverController.rightBumper().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm up
   }
 
   /**

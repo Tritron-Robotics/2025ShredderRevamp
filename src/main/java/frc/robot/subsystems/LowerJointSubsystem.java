@@ -53,8 +53,8 @@ public class LowerJointSubsystem extends SubsystemBase {
     public Command manualControlCommand(Supplier<Double> voltageSupplier) {
     return runEnd(
             () -> setVoltage(voltageSupplier.get()), // Apply voltage when held
-            () -> setVoltage(0.125) // Apply holding voltage when released
-    ).withName("arm.manualControl");
+            () -> setVoltage(-0.175) // Apply holding voltage when released
+    ).withName("lowerJoint.manualControl");
   }
 
 

@@ -20,13 +20,13 @@ import frc.robot.Constants.LowerConstants;
 public class LowerJointSubsystem extends SubsystemBase {
     private static final double LOWER_JOINT_MAX_SPEED = 1.0; // Maximum speed for the lower joint
 
-    
-
+    private final UpperJointSubsystem upperJoint;
     private final SparkMax motor;
 
     private SparkMaxConfig motorConfig;
 
-    public LowerJointSubsystem() {
+    public LowerJointSubsystem(UpperJointSubsystem upperJoint) {
+        this.upperJoint = upperJoint;
         motorConfig = new SparkMaxConfig();
         motorConfig
                 .inverted(LowerConstants.kMotorInverted)
@@ -53,7 +53,13 @@ public class LowerJointSubsystem extends SubsystemBase {
     public Command manualControlCommand(Supplier<Double> voltageSupplier) {
     return runEnd(
             () -> setVoltage(voltageSupplier.get()), // Apply voltage when held
-            () -> setVoltage(-0.175) // Apply holding voltage when released
+            () -> {
+                if(upperJoint.getUpperJointAngle() < 90){
+                    setVoltage(-0.175);
+                } else {
+                    setVoltage(0.175);
+                }
+            } // Apply holding voltage when released
     ).withName("lowerJoint.manualControl");
   }
 

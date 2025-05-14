@@ -30,9 +30,9 @@ public final class Constants {
     public static final boolean kMotorBInverted = true;
 
     public static final int kEncoderDIOPort = 9; 
-    public static final double rawAtMaxAngle = 0.0127;
-    public static final double rawAt90 = 0.588;
-    public static final double rawAtMinAngle = 0.143;
+    public static final double rawAtPos245 = 0.0127 + 1.0; // raw value plus 1.0 in order to unwrap it
+    public static final double rawAtPos90 = 0.588;
+    public static final double rawAtNeg65 = 0.143;
 
   }
 

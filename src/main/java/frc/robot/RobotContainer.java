@@ -28,7 +28,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final UpperJointSubsystem m_upperJointSubsystem = new UpperJointSubsystem();
-  private final LowerJointSubsystem m_lowerJointSubsystem = new LowerJointSubsystem();
+  private final LowerJointSubsystem m_lowerJointSubsystem = new LowerJointSubsystem(m_upperJointSubsystem);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);

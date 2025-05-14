@@ -56,10 +56,14 @@ public class UpperJointSubsystem extends SubsystemBase {
 
     public double getUpperJointAngle() {
         double raw = encoder.get();
-        if (raw <= UpperJointConstants.rawAt90) {
-            return map(raw, UpperJointConstants.rawAtMinAngle, UpperJointConstants.rawAt90, 0, 90);
+        if (raw < UpperJointConstants.rawAtNeg65) {
+            raw += 1.0; 
+        }
+
+        if (raw <= UpperJointConstants.rawAtPos90) {
+            return map(raw, UpperJointConstants.rawAtNeg65, UpperJointConstants.rawAtPos90, -65, 90);
         } else {
-            return map(raw, UpperJointConstants.rawAt90, UpperJointConstants.rawAtMaxAngle, 90, 330);
+            return map(raw, UpperJointConstants.rawAtPos90, UpperJointConstants.rawAtPos245, 90, 245);
         }
     }
 
@@ -69,14 +73,21 @@ public class UpperJointSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println(encoder.get());
+        System.out.println("Current Upper Joint Angle: " + getUpperJointAngle());
     }
 
     // Manual control of the upper joint using a voltage supplier controlled by the Xbox Controller's Left 
     public Command manualControlCommand(Supplier<Double> voltageSupplier) {
         return runEnd(
                 () -> setVoltage(voltageSupplier.get()), // Apply voltage when held
-                () -> setVoltage(-0.350) // Apply holding voltage when released
+                () -> {
+                        if(getUpperJointAngle() < 90){
+                            setVoltage(-0.350);
+                        } else {
+                            setVoltage(0.350);
+                        }
+                    }
+                // Apply holding voltage when released
         ).withName("upperJoint.manualControl");
     }
 

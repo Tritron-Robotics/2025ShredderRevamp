@@ -43,5 +43,12 @@ public final class Constants {
     public static final int kCurrentLimit = 30;
     public static final int kEncoderDIOPort = 0;
   }
-
+  
+  public static class ClawConstants{
+    public static final int kMotorID = 52; 
+    public static final boolean kMotorInverted = false;
+    public static final int kCurrentLimit = 5;
+    public static final int kEncoderDIOPort = 0;
+  }
+    
 }

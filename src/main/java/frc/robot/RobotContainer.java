@@ -12,10 +12,12 @@ import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.UpperJointSubsystem;
 import frc.robot.subsystems.LowerJointSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,6 +31,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final UpperJointSubsystem m_upperJointSubsystem = new UpperJointSubsystem();
   private final LowerJointSubsystem m_lowerJointSubsystem = new LowerJointSubsystem(m_upperJointSubsystem);
+  private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -99,10 +102,17 @@ public class RobotContainer {
 
     // Upper-joint arm control using left bumper and trigger
     m_driverController.leftTrigger().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> 1.0)); // Move arm down
-    m_driverController.leftBumper().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm up
+    m_driverController.leftBumper().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> -1.0)); // Move arm up
 
     m_driverController.rightTrigger().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> 2.0)); // Move arm down
     m_driverController.rightBumper().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm up
+
+    //m_driverController.a().whileTrue(m_ClawJointSubsystem); // Move arm up
+    m_driverController.povUp().onTrue(new InstantCommand(() -> m_ClawSubsystem.setVoltage(0.75)));
+    m_driverController.povUp().onFalse(new InstantCommand(() -> m_ClawSubsystem.setVoltage(0.0)));
+
+    m_driverController.povDown().onTrue(new InstantCommand(() -> m_ClawSubsystem.setVoltage(-0.75)));
+    m_driverController.povDown().onFalse(new InstantCommand(() -> m_ClawSubsystem.setVoltage(0.0)));
   }
 
   /**

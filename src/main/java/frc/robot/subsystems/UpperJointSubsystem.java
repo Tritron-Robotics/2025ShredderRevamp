@@ -73,7 +73,7 @@ public class UpperJointSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //System.out.println("Current Upper Joint Angle: " + getUpperJointAngle());
+        System.out.println("Current Upper Joint Angle: " + getUpperJointAngle());
     }
 
     // Manual control of the upper joint using a voltage supplier controlled by the Xbox Controller's Left 

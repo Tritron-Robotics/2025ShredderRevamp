@@ -9,10 +9,12 @@ import static edu.wpi.first.units.Units.Meter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.UpperJointConstants;
 
 import java.io.File;
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Filesystem;
 import swervelib.parser.SwerveParser;
 import swervelib.SwerveDrive;
@@ -52,8 +54,6 @@ public class SwerveSubsystem extends SubsystemBase {
       }
   }
 
-
-
   /**
    * Example command factory method.
    *
@@ -81,6 +81,8 @@ public class SwerveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    System.out.println(swerveDrive.getModules()[1].getAbsolutePosition()); // FL = 0, FR = 1, BL = 2, BR = 3
+    
   }
 
   @Override

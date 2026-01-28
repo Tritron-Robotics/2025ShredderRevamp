@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.UpperJointSubsystem;
 import frc.robot.subsystems.LowerJointSubsystem;
+import frc.robot.subsystems.KrakenTestSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,6 +30,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final UpperJointSubsystem m_upperJointSubsystem = new UpperJointSubsystem();
   private final LowerJointSubsystem m_lowerJointSubsystem = new LowerJointSubsystem(m_upperJointSubsystem);
+  private final KrakenTestSubsystem m_krakenTestSubsystem = new KrakenTestSubsystem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -103,6 +105,10 @@ public class RobotContainer {
 
     m_driverController.rightTrigger().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> 2.0)); // Move arm down
     m_driverController.rightBumper().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm up
+
+    // Kraken Motor using d-pad
+    m_driverController.x().whileTrue(m_krakenTestSubsystem.backward());
+    m_driverController.y().whileTrue(m_krakenTestSubsystem.forward());
   }
 
   /**

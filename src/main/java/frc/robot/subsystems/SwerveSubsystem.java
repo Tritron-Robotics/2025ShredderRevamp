@@ -81,7 +81,7 @@ public class SwerveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    System.out.println(swerveDrive.getModules()[1].getAbsolutePosition()); // FL = 0, FR = 1, BL = 2, BR = 3
+    // System.out.println(swerveDrive.getModules()[1].getAbsolutePosition()); // FL = 0, FR = 1, BL = 2, BR = 3
     
   }
 

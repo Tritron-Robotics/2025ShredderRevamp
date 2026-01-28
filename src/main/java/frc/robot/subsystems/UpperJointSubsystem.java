@@ -82,9 +82,9 @@ public class UpperJointSubsystem extends SubsystemBase {
                 () -> setVoltage(voltageSupplier.get()), // Apply voltage when held
                 () -> {
                         if(getUpperJointAngle() < 90){
-                            setVoltage(-0.350);
-                        } else {
                             setVoltage(0.350);
+                        } else {
+                            setVoltage(-0.350);
                         }
                     }
                 // Apply holding voltage when released

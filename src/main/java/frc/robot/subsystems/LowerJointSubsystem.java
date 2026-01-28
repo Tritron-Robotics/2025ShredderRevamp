@@ -55,9 +55,9 @@ public class LowerJointSubsystem extends SubsystemBase {
             () -> setVoltage(voltageSupplier.get()), // Apply voltage when held
             () -> {
                 if(upperJoint.getUpperJointAngle() < 90){
-                    setVoltage(-0.175);
-                } else {
                     setVoltage(0.175);
+                } else {
+                    setVoltage(-0.175);
                 }
             } // Apply holding voltage when released
     ).withName("lowerJoint.manualControl");

@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.UpperJointSubsystem;
 import frc.robot.subsystems.LowerJointSubsystem;
-import frc.robot.subsystems.KrakenTestSubsystem;
+// import frc.robot.subsystems.KrakenTestSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,11 +26,11 @@ import frc.robot.subsystems.KrakenTestSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  // private final KrakenTestSubsystem m_KrakenTestSubsystem = new KrakenTestSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final UpperJointSubsystem m_upperJointSubsystem = new UpperJointSubsystem();
   private final LowerJointSubsystem m_lowerJointSubsystem = new LowerJointSubsystem(m_upperJointSubsystem);
-  private final KrakenTestSubsystem m_krakenTestSubsystem = new KrakenTestSubsystem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -100,15 +100,13 @@ public class RobotContainer {
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Upper-joint arm control using left bumper and trigger
-    m_driverController.leftTrigger().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> 1.0)); // Move arm down
+    m_driverController.leftTrigger().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> 2.0)); // Move arm down
     m_driverController.leftBumper().whileTrue(m_upperJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm up
 
     m_driverController.rightTrigger().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> 2.0)); // Move arm down
     m_driverController.rightBumper().whileTrue(m_lowerJointSubsystem.manualControlCommand(() -> -2.0)); // Move arm up
 
-    // Kraken Motor using d-pad
-    m_driverController.x().whileTrue(m_krakenTestSubsystem.backward());
-    m_driverController.y().whileTrue(m_krakenTestSubsystem.forward());
+    // m_driverController.a().whileTrue(m_KrakenTestSubsystem.forward());
   }
 
   /**
